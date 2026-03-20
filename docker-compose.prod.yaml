@@ -1,0 +1,35 @@
+services:
+  minio-object-storage:
+    ports:
+      - "8000:9000"             
+    volumes:
+      - minio-data:/data                                                   
+    env_file:
+      - ./minio/.env
+    command: server /data
+  mysql-database:
+    ports:
+      - "8001:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    env_file:
+      - ./mysql/.env
+  mongo-database:
+    ports:
+      - "8002:27017"
+    volumes:
+      - mongo-data:/data/db
+    env_file:
+      - ./mongo/.env
+  redis-database:
+    ports:
+      - "8003:6379"
+    volumes:
+      - redis-data:/data
+    env_file:
+      - ./redis/.env
+  volumes:
+    minio-data:
+    mysql-data:
+    mongo-data:
+    redis-data:

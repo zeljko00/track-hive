@@ -1,0 +1,55 @@
+services:
+  minio-object-storage:
+    ports:
+      - "9000:9000"                                   # API
+      - "9001:9001"                                   # debug web console
+    volumes:
+      - minio-data-dev:/data                          # named volume to persist data 
+    env_file:
+      - ./minio/.env
+    command: server /data --console-address ":9001"   # start server, set data directory, set console address for web interface
+  mysql-database:
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data-dev:/var/lib/mysql
+    env_file:
+      - ./mysql/.env
+  mongo-database:
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data-dev:/data/db
+    env_file:
+      - ./mongo/.env
+  redis-database:
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data-dev:/data
+    env_file:
+      - ./redis/.env
+  mongo-express:
+    image: mongo-express:latest
+    container_name: track-hive-mongo-express
+    ports:
+      - "8081:8081"
+    # no need to persist data for web admin interface
+    env_file:
+      - ./mongo/.env
+    restart: always
+    depends_on:
+      mongo-database:
+        condition: service_healthy
+    profiles:
+      - dev                                           # only start if development mode is explicitly enabled                     
+    # no need to healthcheck the web admin interface 
+networks:                                             # rename default network in development environment
+  default:
+    name: track-hive-dev-network
+
+volumes:
+  minio-data-dev:
+  mysql-data-dev:
+  mongo-data-dev:
+  redis-data-dev:
