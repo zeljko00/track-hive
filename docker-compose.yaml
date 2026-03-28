@@ -13,7 +13,7 @@ services:
     image: mysql:latest
     container_name: track-hive-mysql-db
     volumes:
-      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql # database init sql script
+      - ./mysql/init.sh:/docker-entrypoint-initdb.d/init.sh  # database init script
     restart: always
     healthcheck:
       test: ["CMD-SHELL", "mysql --user=root --password=$$MYSQL_ROOT_PASSWORD --execute='SHOW DATABASES;'"]
