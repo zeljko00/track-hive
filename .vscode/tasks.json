@@ -1,0 +1,38 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Start dev environment",
+            "type": "shell",
+            "command": "sudo docker compose -f docker-compose.yaml -f docker-compose.dev.yaml --profile dev up -d",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Stop dev environment",
+            "type": "shell",
+            "command": "sudo docker compose -f docker-compose.yaml -f docker-compose.dev.yaml --profile dev down",
+            "group": "build",
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Clear volumes",
+            "type": "shell",
+            "command": "read -p 'Are you sure you want to delete all volumes? (y/N): ' confirm && [[ $confirm == [yY] ]] && sudo docker volume rm $(sudo docker volume ls -q) || echo 'Cancelled.'",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        }
+    ]
+}
