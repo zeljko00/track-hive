@@ -29,6 +29,14 @@ services:
       - redis-data-dev:/data
     env_file:
       - ./redis/.env
+  keycloak-server:
+    ports:
+      - "8080:8080"                                  # TODO: use https
+    volumes:
+      - keycloak-data-dev:/opt/keycloak/data
+    env_file:
+      - ./keycloak/dev/.env
+    command: start-dev
   mongo-express:
     image: mongo-express:latest
     container_name: track-hive-mongo-express
@@ -36,7 +44,7 @@ services:
       - "8081:8081"
     # no need to persist data for web admin interface
     env_file:
-      - ./mongo/.env
+      - ./mongo/express/.env
     restart: always
     depends_on:
       mongo-database:
@@ -53,3 +61,4 @@ volumes:
   mysql-data-dev:
   mongo-data-dev:
   redis-data-dev:
+  keycloak-data-dev:

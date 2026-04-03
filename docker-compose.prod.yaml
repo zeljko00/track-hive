@@ -28,6 +28,12 @@ services:
       - redis-data:/data
     env_file:
       - ./redis/.env
+  keycloak-server:
+    ports:
+      - "8004:8443"
+    env_file:
+      - ./keycloak/prod/.env
+    command: start-dev                    # TODO: use production mode, use real database
   volumes:
     minio-data:
     mysql-data:
