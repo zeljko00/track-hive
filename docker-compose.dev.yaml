@@ -1,13 +1,23 @@
 services:
+  keycloak-server:
+    ports:
+      - "8443:8443"     # API
+      - "9000:9000"     # Health check port
+    volumes:
+      - keycloak-data-dev:/opt/keycloak/data
+      - ./keycloak/dev/https:/https
+    env_file:
+      - ./keycloak/.env
+    command: start-dev
   minio-object-storage:
     ports:
-      - "9000:9000"                                   # API
-      - "9001:9001"                                   # debug web console
+      - "9001:9000"                                   # API
+      - "9002:9001"                                   # Admin console
     volumes:
-      - minio-data-dev:/data                          # named volume to persist data 
+      - minio-data-dev:/data
     env_file:
       - ./minio/.env
-    command: server /data --console-address ":9001"   # start server, set data directory, set console address for web interface
+    command: server /data --console-address ":9001"
   mysql-database:
     ports:
       - "3306:3306"
@@ -29,14 +39,6 @@ services:
       - redis-data-dev:/data
     env_file:
       - ./redis/.env
-  keycloak-server:
-    ports:
-      - "8080:8080"                                  # TODO: use https
-    volumes:
-      - keycloak-data-dev:/opt/keycloak/data
-    env_file:
-      - ./keycloak/dev/.env
-    command: start-dev
   mongo-express:
     image: mongo-express:latest
     container_name: track-hive-mongo-express
@@ -51,8 +53,7 @@ services:
         condition: service_healthy
     profiles:
       - dev                                           # only start if development mode is explicitly enabled                     
-    # no need to healthcheck the web admin interface 
-networks:                                             # rename default network in development environment
+networks:
   default:
     name: track-hive-dev-network
 

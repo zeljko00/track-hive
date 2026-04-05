@@ -1,4 +1,14 @@
 services:
+  keycloak-server:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: track-hive-keycloak-server
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/9000 && printf 'GET /health/ready HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n' >&3 && cat <&3 | grep UP"]
+      start_period: 60s
+      interval: 30s
+      retries: 5
+      timeout: 10s
   minio-object-storage:
     image: minio/minio:latest
     container_name: track-hive-minio-storage
@@ -38,16 +48,6 @@ services:
       test: [ "CMD-SHELL", "redis-cli -a $$REDIS_PASSWORD ping" ]
       start_period: 30s
       retries: 3
-      timeout: 10s
-  keycloak-server:
-    image: quay.io/keycloak/keycloak:latest
-    container_name: track-hive-keycloak-server
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/9000 && printf 'GET /health/ready HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n' >&3 && cat <&3 | grep UP"]
-      start_period: 60s
-      interval: 30s
-      retries: 5
       timeout: 10s
   # track-hive-backend:
   #   build: .
