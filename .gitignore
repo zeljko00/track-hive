@@ -1,2 +1,4 @@
 # Secret files — never commit these
 *.env
+key.pem
+notes*
