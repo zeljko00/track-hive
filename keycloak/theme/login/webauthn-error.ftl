@@ -21,36 +21,22 @@
         <div class="left-panel">
             <div class="card">
 
-                <h2>Welcome back to TrackHive</h2>
+                <h2>Passkey sign-in cancelled</h2>
+                <p class="subtitle">The passkey prompt was dismissed or failed.</p>
 
-                <form id="kc-form-login" action="${url.loginAction}" method="post">
+                <#if message?has_content>
+                    <div class="error">${message.summary}</div>
+                </#if>
 
-                    <div class="field">
-                        <input type="text" name="username" placeholder="Email" autofocus />
-                    </div>
-
-                    <div class="field password-wrapper">
-                        <input type="password" name="password" placeholder="Password" id="password" />
-                        <span class="toggle" onclick="togglePassword()">👁</span>
-                    </div>
-
-                    <div class="row">
-                        <a href="${url.loginResetCredentialsUrl}" class="link">Forgot password?</a>
-                    </div>
-
-                    <button type="submit">Sign in</button>
-
-                    <#if message?has_content>
-                        <div class="error">${message.summary}</div>
-                    </#if>
-
+                <form action="${url.loginAction}" method="post">
+                    <button type="submit" class="btn-passkey">🔑 Try passkey again</button>
                 </form>
 
                 <#if auth.showTryAnotherWayLink()>
                     <div class="divider"><span>or</span></div>
                     <form action="${url.loginAction}" method="post">
                         <input type="hidden" name="tryAnotherWay" value="on"/>
-                        <button type="submit" class="btn-passkey">🔑 Sign in with Passkey</button>
+                        <button type="submit" class="btn-secondary">Use password instead</button>
                     </form>
                 </#if>
 
@@ -66,13 +52,6 @@
         </div>
 
     </div>
-
-    <script>
-        function togglePassword() {
-            const input = document.getElementById('password');
-            input.type = input.type === 'password' ? 'text' : 'password';
-        }
-    </script>
 
 </body>
 

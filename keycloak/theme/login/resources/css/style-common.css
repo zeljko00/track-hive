@@ -239,3 +239,101 @@ button:active {
         font-size: 15px;
     }
 }
+
+/* Passkey / secondary button styles */
+.btn-passkey {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    margin-top: 0;
+}
+
+.btn-passkey:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1.5px solid var(--border) !important;
+    color: var(--text) !important;
+    margin-top: 0;
+}
+
+.btn-secondary:hover {
+    background: var(--input-bg) !important;
+    transform: none;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+    color: var(--text-muted, #888);
+    font-size: 13px;
+    gap: 10px;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--border);
+}
+
+/* Auth method selector */
+.auth-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.auth-option-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    margin-top: 0;
+    padding: 16px 18px;
+    border-radius: 14px;
+    border: 1.5px solid var(--border) !important;
+    background: var(--card) !important;
+    color: var(--text) !important;
+    font-size: 15px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.auth-option-btn:hover {
+    border-color: var(--primary) !important;
+    transform: translateY(-1px);
+    background: var(--input-bg) !important;
+}
+
+.auth-option-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.auth-option-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.auth-option-text strong {
+    font-weight: 600;
+}
+
+.auth-option-text small {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 400;
+}
+
+.auth-option-arrow {
+    font-size: 20px;
+    color: var(--muted);
+    flex-shrink: 0;
+}
